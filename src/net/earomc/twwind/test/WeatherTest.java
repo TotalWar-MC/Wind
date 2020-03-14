@@ -1,9 +1,8 @@
 package net.earomc.twwind.test;
 
 import net.earomc.twwind.TWWind;
-import org.bukkit.Bukkit;
+import net.earomc.twwind.WindProvider;
 import org.bukkit.World;
-import org.bukkit.WorldCreator;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,14 +13,16 @@ public class WeatherTest implements Listener {
 
     private World world;
 
+    private WindProvider windProvider;
     public WeatherTest(World world) {
         this.world = world;
+        this.windProvider = new WindProvider(world);
     }
 
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent event) {
         net.minecraft.server.v1_12_R1.World world1 = ((CraftWorld)world).getHandle();
-        world1.getWorldData().I();
+        world1.isRaining();
     }
 
     public void startDisplayingWeather() {
@@ -32,9 +33,12 @@ public class WeatherTest implements Listener {
                 System.out.println("Weather Duration: " + world.getWeatherDuration());
                 System.out.println("Is thundering: " + world.isThundering());
                 System.out.println("Thunder Duration: " + world.getThunderDuration());
+                System.out.println("Is having storm: " + world.hasStorm());
+                System.out.println("Weather: " + windProvider.getCurrentWeather());
                 System.out.println("------------------");
+
             }
-        }.runTaskTimer(TWWind.getPlugin(), 0, 1);
+        }.runTaskTimer(TWWind.getPlugin(), 0, 5);
     }
 
 }

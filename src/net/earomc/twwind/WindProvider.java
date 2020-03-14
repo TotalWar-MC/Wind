@@ -6,19 +6,30 @@ public class WindProvider {
 
 
     private World world;
-    private Weather weather;
+    private WeatherType weather;
 
+    public WindProvider(World world) {
+        this.world = world;
+    }
 
     private void updateWind() {
-
+        this.weather = getCurrentWeather();
     }
 
-    private Weather getCurrentWeather() {
-        //if (world.getWeatherDuration())
-        return null;
+
+
+
+    public WeatherType getCurrentWeather() {
+        if (world.isThundering() && world.hasStorm()) {
+            return WeatherType.THUNDER;
+        }
+        if (world.hasStorm() && !world.isThundering()) {
+            return WeatherType.RAIN;
+        }
+        return WeatherType.CLEAR;
     }
 
-    public Weather getWeather() {
+    public WeatherType getWeather() {
         return weather;
     }
 }
