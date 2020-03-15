@@ -13,6 +13,11 @@ public class WeatherTest implements Listener {
 
     private World world;
 
+
+    private static double getDegreesFromRadiants(double rad) {
+        return (rad / Math.PI * 180) % 360;
+    }
+
     private WindProvider windProvider;
     public WeatherTest(World world) {
         this.world = world;
@@ -38,7 +43,7 @@ public class WeatherTest implements Listener {
                 System.out.println("------------------");
 
             }
-        }.runTaskTimer(TWWind.getPlugin(), 0, 5);
+        }.runTaskTimer(TWWind.getInstance(), 0, 5);
     }
 
 }
